@@ -1,6 +1,12 @@
 import { readFileSync, writeFileSync } from 'fs'
 import pMap from 'p-map'
 import { spawn } from 'child_process'
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const repoRoot = path.resolve(__dirname, '..')
+const codexConfigPath = path.join(repoRoot, '.codex', 'config.toml')
 
 const report = JSON.parse(readFileSync('./vulnerability-report.json', 'utf-8'))
 
@@ -106,7 +112,7 @@ const classifyIssue = (issue, filePath) => {
   return new Promise((resolve) => {
     const proc = spawn(
       'codex',
-      ['exec', '--profile', 'test', '--full-auto'],
+      ['exec', '--profile', codexConfigPath, '--full-auto'],
       {}
     )
     // const proc = spawn('ccr', ['code', '--print', prompt], {
