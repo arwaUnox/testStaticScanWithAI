@@ -1,12 +1,8 @@
 import { readFileSync, writeFileSync } from 'fs'
 import pMap from 'p-map'
-import { spawn, execSync } from 'child_process'
-// import { setTimeout as wait } from 'timers/promises'
-// import fetch from 'node-fetch'
-// import extractJSON from 'extract-json-from-string'
-// import { jsonFromText } from 'extract-json-from-text'
+import { spawn } from 'child_process'
+
 const report = JSON.parse(readFileSync('./vulnerability-report.json', 'utf-8'))
-const CCR_PORT = 3456
 
 const generatePrompt = (finding, filePath) => `
 You are a senior application security auditor reviewing static code analysis findings from a TypeScript backend project that exposes an HTTP API.
