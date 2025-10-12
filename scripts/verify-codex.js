@@ -112,7 +112,7 @@ const classifyIssue = (issue, filePath) => {
   return new Promise((resolve) => {
     const proc = spawn(
       'codex',
-      ['exec', '--profile', codexConfigPath, '--full-auto'],
+      ['exec', '--model', 'gpt-5-codex', '--full-auto'],
       {}
     )
     // const proc = spawn('ccr', ['code', '--print', prompt], {
