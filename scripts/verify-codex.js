@@ -110,11 +110,12 @@ const classifyIssue = (issue, filePath) => {
   const prompt = generatePrompt(issue, filePath)
 
   return new Promise((resolve) => {
-    const proc = spawn(
-      'codex',
-      ['exec', '--model', 'gpt-5-codex', '--full-auto'],
-      {}
-    )
+    const proc = spawn('codex', ['exec', '--profile', 'test', '--full-auto'], {
+      cwd: process.cwd(),
+      env: {
+        CODEX_CONFIG_PATH: codexConfigPath,
+      },
+    })
     // const proc = spawn('ccr', ['code', '--print', prompt], {
     //   cwd: process.cwd(),
     //   stdio: ['pipe', 'pipe', 'pipe'],
