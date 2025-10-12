@@ -42,10 +42,17 @@ jobs:
         env:
           FIREWORKS_API_KEY: ${{ secrets.FIREWORKS_API_KEY }}
 
+      - name: Check API key exists
+        run: echo "OPENAI_API_KEY is set"
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
       # 🔹 STEP 2: Run classification script (codex / DeepSeek)
       - name: Run vulnerability classification
         run: |
           node scripts/verify-codex.js
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
       # 🔹 STEP 3: Convert classification results to SARIF format
       # (so GitHub Code Scanning can display them)
