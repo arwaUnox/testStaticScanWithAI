@@ -43,7 +43,13 @@ jobs:
           FIREWORKS_API_KEY: ${{ secrets.FIREWORKS_API_KEY }}
 
       - name: Check API key exists
-        run: echo "OPENAI_API_KEY is set ${{ secrets.OPENAI_API_KEY }}"
+        run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "OPENAI_API_KEY is missing"
+            exit 1
+          else
+            echo "OPENAI_API_KEY is set"
+          fi
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
