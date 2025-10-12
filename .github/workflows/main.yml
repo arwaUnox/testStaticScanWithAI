@@ -28,7 +28,7 @@ jobs:
         run: npm ci
 
       - name: Install Codex CLI
-        run: npm install -g @openai/codex-cli
+        run: npm install -g @openai/codex
 
       - name: Write Codex profile file
         run: |
