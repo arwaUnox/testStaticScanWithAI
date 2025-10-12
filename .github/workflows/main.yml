@@ -30,11 +30,6 @@ jobs:
       - name: Install Codex CLI
         run: npm install -g @openai/codex
 
-      - name: Setup Codex config
-        run: |
-          mkdir -p ~/.codex
-          cp .codex/config.toml ~/.codex/config.toml
-
       # 🔹 STEP 1: Run your Fireworks DeepSeek scan
       - name: Run Fireworks vulnerability scan
         run: |
