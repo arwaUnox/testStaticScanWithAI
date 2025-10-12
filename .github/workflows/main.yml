@@ -2,9 +2,9 @@ name: AI Static Code Analysis
 
 on:
   push:
-    branches: [main]
+    branches: [main, working]
   pull_request:
-    branches: [main]
+    branches: [main, working]
   workflow_dispatch:
 
 permissions:
