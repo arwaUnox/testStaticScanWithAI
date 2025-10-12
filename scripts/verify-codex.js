@@ -1,10 +1,10 @@
 import { readFileSync, writeFileSync } from 'fs'
 import pMap from 'p-map'
 import { spawn, execSync } from 'child_process'
-import { setTimeout as wait } from 'timers/promises'
-import fetch from 'node-fetch'
-import extractJSON from 'extract-json-from-string'
-import { jsonFromText } from 'extract-json-from-text'
+// import { setTimeout as wait } from 'timers/promises'
+// import fetch from 'node-fetch'
+// import extractJSON from 'extract-json-from-string'
+// import { jsonFromText } from 'extract-json-from-text'
 const report = JSON.parse(readFileSync('./vulnerability-report.json', 'utf-8'))
 const CCR_PORT = 3456
 
@@ -108,7 +108,11 @@ const classifyIssue = (issue, filePath) => {
   const prompt = generatePrompt(issue, filePath)
 
   return new Promise((resolve) => {
-    const proc = spawn('codex', ['exec', '--profile', 'test', '--full-auto'], {})
+    const proc = spawn(
+      'codex',
+      ['exec', '--profile', 'test', '--full-auto'],
+      {}
+    )
     // const proc = spawn('ccr', ['code', '--print', prompt], {
     //   cwd: process.cwd(),
     //   stdio: ['pipe', 'pipe', 'pipe'],
@@ -126,7 +130,9 @@ const classifyIssue = (issue, filePath) => {
 
     proc.on('close', (code) => {
       if (code !== 0) {
-        console.error(`${filePath}: ${issue.vulnerability} → exited with code ${code}`)
+        console.error(
+          `${filePath}: ${issue.vulnerability} → exited with code ${code}`
+        )
         console.error(error)
         return resolve({ issue, result: null, error })
       }
@@ -149,8 +155,14 @@ const classifyIssue = (issue, filePath) => {
 
         console.log('valid result is:', validResult)
         if (validResult === null) {
-          console.warn(`${filePath}: ${issue.vulnerability} → No valid results found`)
-          return resolve({ issue, result: null, error: 'No valid result in output' })
+          console.warn(
+            `${filePath}: ${issue.vulnerability} → No valid results found`
+          )
+          return resolve({
+            issue,
+            result: null,
+            error: 'No valid result in output',
+          })
         }
 
         resolve({ issue, validResult })
@@ -178,7 +190,7 @@ const run = async () => {
       async (issue) => await classifyIssue(issue, filePath),
       {
         concurrency: 3,
-      },
+      }
     )
 
     results[file] = {
@@ -187,7 +199,10 @@ const run = async () => {
     }
   }
 
-  writeFileSync('./classified-findings-gpt5.json', JSON.stringify(results, null, 2))
+  writeFileSync(
+    './classified-findings-gpt5.json',
+    JSON.stringify(results, null, 2)
+  )
   console.log('\nResults saved to classified-findings-gpt5.json')
 }
 
