@@ -5,6 +5,7 @@ import { AbortController } from 'node-abort-controller'
 import async from 'async'
 import { buildPrompt } from './security-prompt.js'
 import extract from 'extract-json-from-string'
+
 const FIREWORKS_API_KEY = 'fw_3ZMVCE75ayMd3AzuTdJrrky5'
 const MODEL = 'accounts/fireworks/models/deepseek-r1'
 const MAX_TOKENS = 4096
